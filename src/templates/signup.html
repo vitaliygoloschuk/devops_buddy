@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8" />
+    <title>Реєстрація - DevOps Buddy</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .signup-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            width: 360px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 15px;
+        }
+        p.welcome {
+            color: #9ac5ff;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2575fc;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #1a54d8;
+        }
+        .login-link {
+            margin-top: 20px;
+            color: white;
+        }
+        .login-link a {
+            color: #9ac5ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        .errorlist {
+            color: #ff7b7b;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h1>Створити акаунт</h1>
+
+        {% if user.is_authenticated %}
+            <p class="welcome">Вітаємо, {{ user.username }}!</p>
+        {% endif %}
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="form-group">
+                {{ form.username.errors }}
+                <input type="text" name="{{ form.username.name }}" placeholder="Логін (ім'я користувача)" value="{{ form.username.value|default_if_none:'' }}" />
+            </div>
+            <div class="form-group">
+                {{ form.password1.errors }}
+                <input type="password" name="{{ form.password1.name }}" placeholder="Пароль" />
+            </div>
+            <div class="form-group">
+                {{ form.password2.errors }}
+                <input type="password" name="{{ form.password2.name }}" placeholder="Підтвердження пароля" />
+            </div>
+
+            <button type="submit">Зареєструватись</button>
+        </form>
+
+        <div class="login-link">
+            Вже маєте акаунт? <a href="{% url 'login' %}">Увійти</a>
+        </div>
+    </div>
+</body>
+</html>

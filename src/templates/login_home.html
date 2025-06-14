@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8" />
+    <title>Увійти - DevOps Buddy</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            width: 320px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        .form-input,
+        form button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 1em;
+            border-radius: 8px;
+            box-sizing: border-box;
+            min-height: 44px;
+        }
+
+        .form-input {
+            border: none;
+            background-color: white;
+            color: black;
+        }
+
+        .form-input::placeholder {
+            color: #555;
+        }
+
+        form button {
+            background: #2575fc;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, box-shadow 0.3s ease;
+            box-shadow: 0 0 6px rgba(255, 215, 0, 0.7);
+        }
+
+        form button:hover {
+            background: #1a54d8;
+            box-shadow: 0 0 12px rgba(255, 223, 70, 0.9);
+        }
+
+        .signup-link {
+            margin-top: 10px;
+            color: white;
+            font-size: 0.95em;
+        }
+
+        .signup-link a {
+            color: #ffd600; /* більш насичений жовтий */
+            text-decoration: none;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background-color: rgba(255, 214, 0, 0.2);
+            box-shadow: 0 0 8px rgba(255, 214, 0, 0.5);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            background-color: rgba(255, 214, 0, 0.8);
+            box-shadow: 0 0 18px rgba(255, 214, 0, 1);
+            color: #fff9c4; /* світло-жовтий */
+        }
+
+        .errorlist {
+            color: #ff7b7b;
+            margin-bottom: 10px;
+            text-align: left;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Увійдіть в DevOps Buddy</h1>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div>
+                {{ form.username.errors }}
+                <input type="text" name="{{ form.username.html_name }}" value="{{ form.username.value|default_if_none:'' }}" placeholder="Ім'я користувача" class="form-input" required>
+            </div>
+
+            <div>
+                {{ form.password.errors }}
+                <input type="password" name="{{ form.password.html_name }}" placeholder="Пароль" class="form-input" required>
+            </div>
+
+            <button type="submit">Увійти</button>
+        </form>
+
+        <div class="signup-link">
+            Ще не зареєстровані? <a href="{% url 'signup' %}">Створити акаунт</a>
+        </div>
+    </div>
+</body>
+</html>

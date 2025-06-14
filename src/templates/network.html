@@ -1,0 +1,249 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8" />
+    <title>Мережі</title>  <!-- фіксований заголовок вкладки -->
+    <style>
+    html, body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f9fc;
+      color: #333;
+    }
+
+        /* Навігація */
+        nav {
+            background-color: #2575fc;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            align-items: center;
+        }
+
+        nav a,
+        nav form button {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: inherit;
+            font-size: 1em;
+            display: inline-block;
+        }
+
+        nav a:hover,
+        nav form button:hover {
+            background: #1a54d8;
+        }
+
+        nav form {
+            display: inline;
+            margin: 0; /* прибираємо зайві відступи */
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            color: #2575fc;
+            text-align: center;
+        }
+
+        h2 {
+            color: #2575fc;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 600; /* менш жирний */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        img.network-logo {
+            display: block;
+            margin: 0 auto 30px auto;
+            width: 450px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Рівні TCP/IP та OSI у вигляді списку */
+        ul.levels {
+            list-style: none;
+            padding: 0;
+            margin: 0 auto 40px;
+            max-width: 700px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        ul.levels li {
+            background: #e1eaff;
+            border-radius: 8px;
+            width: 150px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            font-weight: 600;
+            color: #2575fc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        ul.levels li img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            margin: 0;
+        }
+
+        ul.levels li small {
+            font-weight: normal;
+            color: #555;
+            font-size: 0.9rem;
+            display: block;
+        }
+
+        p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+            font-size: 1rem;
+            color: #444;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #999;
+            font-size: 0.9rem;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+    </style> 
+</head>
+<body>
+
+    <nav>
+    <a href="{% url 'home' %}">🏠 Головна</a>
+    <a href="{% url 'linux_info' %}">🐧 Linux</a>
+    <a href="{% url 'network_info' %}">🌐 Мережі</a>
+    <a href="{% url 'logging_monitoring_info' %}">📈 Моніторинг</a>
+    <a href="{% url 'ci_cd_info' %}">🔄 CI/CD</a>
+    <a href="{% url 'cloud_providers_info' %}">☁️ Клауд</a>
+    <a href="{% url 'security_info' %}">🛡️ Безпека</a>
+        {% if user.is_authenticated %}
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">🚪 Вийти</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">🔐 Увійти</a>
+        {% endif %}
+    </nav>
+
+    <div class="content">
+        <h1>Мережі</h1>
+
+        <img class="network-logo"
+             src="https://img.freepik.com/free-vector/flat-isometric-internet-network-concept_126523-1731.jpg?semt=ais_hybrid&w=740"
+             alt="Мережа" />
+
+        <h2>Мережа</h2>
+        <p>
+            Мережа — це система, що дозволяє пристроям обмінюватись даними. Вона може бути локальною (LAN) або глобальною (WAN).
+            IP-адреси і маршрутизатори допомагають пристроям знаходити одне одного.
+        </p>
+
+        <h2>Модель TCP/IP</h2>
+        <p>
+            TCP/IP — це набір протоколів, що використовується для зв’язку в Інтернеті. Вона складається з 4 основних рівнів:
+        </p>
+        <ul class="levels">
+            <li>
+                <img src="{% static 'images/computer-network.png' %}" alt="Рівень мережевого інтерфейсу" />
+                Рівень мережевого інтерфейсу
+                <small>Обробка фізичного доступу до мережі</small>
+            </li>
+            <li>
+                <img src="{% static 'images/internet.png' %}" alt="Інтернет-рівень" />
+                Інтернет-рівень
+                <small>Маршрутизація пакетів (IP)</small>
+            </li>
+            <li>
+                <img src="{% static 'images/connection-status-on.png' %}" alt="Транспортний рівень" />
+                Транспортний рівень
+                <small>Передача даних (TCP, UDP)</small>
+            </li>
+            <li>
+                <img src="https://img.icons8.com/ios-filled/50/000000/source-code.png" alt="Прикладний рівень" />
+                Прикладний рівень
+                <small>Програми і сервіси (HTTP, FTP, DNS)</small>
+            </li>
+        </ul>
+
+        <h2>Модель OSI</h2>
+        <p>
+            OSI — це семи рівнева модель, яка стандартизує функції мережі:
+        </p>
+        <ul class="levels">
+            <li>
+                <img src="https://trinix.ua/wp-content/uploads/a9736c28-1367-11ed-a20d-00155d1d9300_d7f92494-f000-11ed-a222-00155d8a3501.jpeg" alt="Фізичний рівень" />
+                1. Фізичний
+                <small>Кабелі, сигнали</small>
+            </li>
+            <li>
+                <img src="https://img.icons8.com/ios-filled/50/000000/wifi.png" alt="Канальний рівень" />
+                2. Канальний
+                <small>MAC-адреси, кадри</small>
+            </li>
+            <li>
+                <img src="https://img.icons8.com/ios-filled/50/000000/network.png" alt="Мережевий рівень" />
+                3. Мережевий
+                <small>IP, маршрутизація</small>
+            </li>
+            <li>
+                <img src="{% static 'images/transport-osi.png' %}" alt="Транспортний рівень" />
+                4. Транспортний
+                <small>TCP, UDP, надійність</small>
+            </li>
+            <li>
+                <img src="{% static 'images/session.png' %}" alt="Сеансовий рівень" />
+                5. Сеансовий
+                <small>Відкриття/закриття сесій</small>
+            </li>
+            <li>
+                <img src="{% static 'images/presentation-osi.png' %}" alt="Представницький рівень" />
+                6. Представницький
+                <small>Кодування, шифрування</small>
+            </li>
+            <li>
+                <img src="https://img.icons8.com/ios-filled/50/000000/application-window.png" alt="Прикладний рівень" />
+                7. Прикладний
+                <small>Інтерфейс користувача, сервіси</small>
+            </li>
+        </ul>
+    </div>
+
+    <footer>
+        © 2025 DevOps Buddy. Всі права захищені.
+    </footer>
+
+</body>
+</html>

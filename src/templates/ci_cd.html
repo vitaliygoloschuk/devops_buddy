@@ -1,0 +1,251 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>CI/CD – Безперервна інтеграція та доставка</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f9fc;
+      color: #333;
+    }
+    body { padding-top: 20px; padding-bottom: 20px; }
+    nav {
+      background-color: #2575fc;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 12px 16px;
+      margin: 0;
+      width: 100vw;
+      box-sizing: border-box;
+      border-radius: 0;
+      flex-wrap: wrap;
+      position: fixed;
+      top: 0; left: 0; z-index: 1000;
+    }
+    nav a, nav form button {
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    nav a:hover, nav form button:hover {
+      background-color: #1a54d8;
+    }
+    nav form { margin: 0; }
+
+    .container {
+      max-width: 900px;
+      margin: 80px auto 0 auto;
+      padding: 0 20px;
+    }
+    h1 {
+      color: #2575fc;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    h2 {
+      color: #2575fc;
+      font-weight: 700;
+      margin-bottom: 16px;
+      font-size: 1.75rem;
+      text-align: center;
+    }
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto 25px auto;
+      text-align: center;
+      color: #444;
+    }
+    .header-image {
+      display: block;
+      max-width: 450px;
+      width: 90%;
+      height: auto;
+      margin: 0 auto 40px auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      object-fit: cover;
+    }
+    .levels {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .level {
+      background-color: #e1eaff;
+      border-radius: 12px;
+      width: 180px;
+      padding: 20px 15px;
+      box-shadow: 0 3px 7px rgba(0,0,0,0.1);
+      text-align: center;
+      font-weight: 600;
+      color: #2575fc;
+      cursor: default;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.15s ease-in-out;
+    }
+    .level:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+    .level img {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      margin-bottom: 0;
+    }
+    .level small {
+      font-weight: 400;
+      color: #555;
+      font-size: 0.9rem;
+      margin-top: 0;
+      line-height: 1.3;
+      text-align: center;
+      user-select: none;
+    }
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      color: #999;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    @media (max-width: 600px) {
+      nav {
+        gap: 12px;
+        padding: 10px 10px;
+      }
+      .level {
+        width: 140px;
+        padding: 15px 12px;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
+      h2 {
+        font-size: 1.4rem;
+        margin-bottom: 14px;
+      }
+      .header-image {
+        max-width: 90%;
+        margin-bottom: 30px;
+      }
+      p {
+        font-size: 1rem;
+        max-width: 100%;
+        padding: 0 10px;
+      }
+      .container {
+        margin-top: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="{% url 'home' %}">🏠 Головна</a>
+    <a href="{% url 'linux_info' %}">🐧 Linux</a>
+    <a href="{% url 'network_info' %}">🌐 Мережі</a>
+    <a href="{% url 'logging_monitoring_info' %}">📈 Моніторинг</a>
+    <a href="{% url 'ci_cd_info' %}">🔄 CI/CD</a>
+    <a href="{% url 'cloud_providers_info' %}">☁️ Клауд</a>
+    <a href="{% url 'security_info' %}">🛡️ Безпека</a>
+    {% if user.is_authenticated %}
+      <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">🚪 Вийти</button>
+      </form>
+    {% else %}
+      <a href="{% url 'login' %}">🔐 Увійти</a>
+    {% endif %}
+  </nav>
+
+  <div class="container">
+    <h1>CI/CD — Безперервна інтеграція та доставка</h1>
+
+    <img
+      class="header-image"
+      src="https://cdn-icons-png.flaticon.com/512/3292/3292861.png"
+      alt="CI/CD pipeline illustration"
+      loading="lazy"
+    />
+
+    <p>
+      CI/CD (Continuous Integration / Continuous Delivery) — це методологія розробки ПЗ, що дозволяє автоматизувати побудову, тестування і доставку програмного забезпечення.
+      Вона допомагає підвищити якість коду, швидкість релізів і надійність.
+    </p>
+
+    <section aria-labelledby="ci-title">
+      <h2 id="ci-title">Безперервна інтеграція (CI)</h2>
+      <p>Процес регулярного злиття змін коду в спільний репозиторій із автоматичним тестуванням.</p>
+      <div class="levels">
+        <div class="level" role="group" aria-label="Збірка коду">
+          <img src="https://img.icons8.com/ios-filled/50/2575fc/building.png" alt="Build icon" />
+          Збірка коду
+          <small>Автоматична компіляція та перевірка</small>
+        </div>
+        <div class="level" role="group" aria-label="Автотести">
+          <img src="https://img.icons8.com/ios-filled/50/2575fc/test-passed.png" alt="Testing icon" />
+          Автотести
+          <small>Перевірка якості та функціоналу</small>
+        </div>
+        <div class="level" role="group" aria-label="Інтеграційні перевірки">
+          <img src="https://img.icons8.com/ios-filled/50/2575fc/synchronize.png" alt="Integration icon" />
+          Інтеграційні перевірки
+          <small>Перевірка взаємодії компонентів</small>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="cd-title">
+      <h2 id="cd-title">Безперервна доставка (CD)</h2>
+      <p>Автоматизація розгортання ПЗ на тестові або продакшн середовища.</p>
+      <div class="levels">
+        <div class="level" role="group" aria-label="Автоматичне розгортання">
+          <img src="https://img.icons8.com/ios-filled/50/2575fc/cloud-deployment.png" alt="Deployment icon" />
+          Автоматичне розгортання
+          <small>Швидке розгортання змін</small>
+        </div>
+        <div class="level" role="group" aria-label="Моніторинг">
+          <img src="https://img.icons8.com/ios-filled/50/2575fc/monitor.png" alt="Monitoring icon" />
+          Моніторинг
+          <small>Контроль стабільності</small>
+        </div>
+        <div class="level" role="group" aria-label="Відкат">
+          <img src="https://img.icons8.com/ios-filled/50/2575fc/rollback.png" alt="Rollback icon" />
+          Відкат
+          <small>Миттєве повернення до стабільної версії</small>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    © 2025 DevOps Buddy. Всі права захищені.
+  </footer>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ title }}</title>
+    <style>
+    html, body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f9fc;
+      color: #333;
+    }
+
+        /* Навігація */
+        nav {
+            background-color: #2575fc;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            align-items: center;
+        }
+
+        nav a,
+        nav form button {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: inherit;
+            font-size: 1em;
+            display: inline-block;
+        }
+
+        nav a:hover,
+        nav form button:hover {
+            background: #1a54d8;
+        }
+
+        nav form {
+            display: inline;
+            margin: 0; /* прибираємо зайві відступи */
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            color: #2575fc;
+            text-align: center;
+        }
+
+        .linux-logo {
+            display: block;
+            margin: 0 auto 20px auto;
+            width: 150px;
+        }
+
+        ul.commands {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.commands li {
+            background: #e1eaff;
+            margin: 8px 0;
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        ul.commands li img {
+            width: 30px;
+            height: 30px;
+            margin-right: 15px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #999;
+            font-size: 0.9rem;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Меню навігації -->
+    <nav>
+    <a href="{% url 'home' %}">🏠 Головна</a>
+    <a href="{% url 'linux_info' %}">🐧 Linux</a>
+    <a href="{% url 'network_info' %}">🌐 Мережі</a>
+    <a href="{% url 'logging_monitoring_info' %}">📈 Моніторинг</a>
+    <a href="{% url 'ci_cd_info' %}">🔄 CI/CD</a>
+    <a href="{% url 'cloud_providers_info' %}">☁️ Клауд</a>
+    <a href="{% url 'security_info' %}">🛡️ Безпека</a>
+        {% if user.is_authenticated %}
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">🚪 Вийти</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">🔐 Увійти</a>
+        {% endif %}
+    </nav>
+
+    <!-- Контент -->
+    <div class="content">
+        <h1>{{ title }}</h1>
+
+        <img class="linux-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/1024px-Tux.svg.png" alt="Linux Tux Logo" />
+
+        <p>
+            Linux — це операційна система з відкритим кодом, створена в 1991 році Лінусом Торвальдсом. 
+            Вона широко використовується на серверах, вбудованих системах і десктопах.
+        </p>
+
+        <h2>Основні команди Linux:</h2>
+        <ul class="commands">
+            <li><img src="https://img.icons8.com/ios-filled/50/000000/folder-invoices.png" alt="ls icon" /> <strong>ls</strong> — показати вміст директорії</li>
+            <li><img src="https://img.icons8.com/ios-filled/50/000000/folder-invoices.png" alt="cd icon" /> <strong>cd</strong> — змінити директорію</li>
+            <li><img src="https://img.icons8.com/ios-filled/50/000000/compass.png" alt="pwd icon" /> <strong>pwd</strong> — показати поточний шлях</li>
+            <li><img src="https://img.icons8.com/ios-filled/50/000000/copy.png" alt="cp icon" /> <strong>cp</strong> — копіювати файли</li>
+            <li><img src="https://img.icons8.com/ios-filled/50/000000/move.png" alt="mv icon" /> <strong>mv</strong> — перемістити або перейменувати файли</li>
+            <li><img src="https://img.icons8.com/ios-filled/50/000000/delete-sign.png" alt="rm icon" /> <strong>rm</strong> — видалити файли</li>
+            <li><img src="https://img.icons8.com/ios-filled/50/000000/help.png" alt="man icon" /> <strong>man</strong> — показати довідку по команді</li>
+        </ul>
+    </div>
+
+    <footer>
+        © 2025 DevOps Buddy. Всі права захищені.
+    </footer> 
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>DevOps Buddy</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <nav>
+        {% if user.is_authenticated %}
+            Привіт, {{ user.username }} |
+            <a href="{% url 'logout' %}">Вийти</a>
+        {% else %}
+            <a href="{% url 'login' %}">Увійти</a>
+        {% endif %}
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
